@@ -4,43 +4,48 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.webserviceapplication.local.model.LocalCharacter
 import com.example.webserviceapplication.local.model.LocalMovie
+import com.example.webserviceapplication.local.repository.LocalCharacterRepository
 import com.example.webserviceapplication.local.repository.LocalMovieRepository
 import com.example.webserviceapplication.server.model.Movie
+import com.example.webserviceapplication.server.modelo.Character
 import kotlinx.coroutines.launch
 
 class DetailViewModel : ViewModel() {
 
-     private val localMovieRepository = LocalMovieRepository()
+    private val localCharacterRepository = LocalCharacterRepository()
 
     private val _isMovieFavorite : MutableLiveData<Boolean> = MutableLiveData()
     val isMovieFavorite : LiveData<Boolean> = _isMovieFavorite
 
-    fun saveMovie(movie: Movie) {
-        val localMovie = LocalMovie(
-            id = movie.id,
-            title = movie.title,
-            posterPath = movie.posterPath,
-            releaseDate = movie.releaseDate,
-            voteAverage = movie.voteAverage,
-            overview = movie.overview
+    fun saveCharacter(character: Character) {
+        val localCharacter = LocalCharacter(
+            id = character.id,
+            name = character.name,
+            status = character.status,
+            species = character.species,
+            type = character.type,
+            gender = character.gender,
+            image = character.image,
+            created = character.created
         )
 
         viewModelScope.launch {
-            localMovieRepository.saveMovie(localMovie)
+            localCharacterRepository.saveCharacter(localCharacter)
         }
     }
 
-    fun searchMovie(id: Int) {
+    fun searchCharacter(id: Int) {
 
-        var movieFavorite = false
+        var characterFavorite = false
 
         viewModelScope.launch {
-            val localMovie = localMovieRepository.searchMovie(id)
+            val localCharacter = localCharacterRepository.searchCharacter(id)
 
-            if(localMovie != null)
-                movieFavorite = true
-            _isMovieFavorite.postValue(movieFavorite)
+            if(localCharacter != null)
+                characterFavorite = true
+            _isMovieFavorite.postValue(characterFavorite)
         }
     }
 }

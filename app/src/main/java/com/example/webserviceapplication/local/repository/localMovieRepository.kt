@@ -25,4 +25,5 @@ class LocalMovieRepository {
         val movieDAO: MovieDAO = WebServiceApplication.database.MovieDAO()
         movieDAO.deleteMovie(localMovie)
     }
+
 }

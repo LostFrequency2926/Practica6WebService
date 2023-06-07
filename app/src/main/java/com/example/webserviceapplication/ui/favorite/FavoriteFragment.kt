@@ -11,16 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.webserviceapplication.R
 import com.example.webserviceapplication.databinding.FragmentFavoriteBinding
 import com.example.webserviceapplication.local.model.LocalMovie
-import com.example.webserviceapplication.server.model.Movie
-import com.example.webserviceapplication.ui.list.MoviesAdapter
 
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private lateinit var favoriteViewModel: FavoriteViewModel
     private val binding get() = _binding!!
-
-
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View {
@@ -30,7 +26,7 @@ class FavoriteFragment : Fragment() {
 
 
         val favoriteMoviesList = ArrayList<LocalMovie>()
-        val moviesFavoriteAdapter = MoviesFavoriteAdapter(
+        val charactersFavoriteAdapter = CharactersFavoriteAdapter(
             favoriteMoviesList,
             onItemClicked = {},
             onItemLongClicked = {localMovie ->
@@ -39,14 +35,14 @@ class FavoriteFragment : Fragment() {
 
         binding.moviesFavoriteRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@FavoriteFragment.requireContext())
-        adapter = moviesFavoriteAdapter
+        adapter = charactersFavoriteAdapter
         setHasFixedSize(false)
         }
 
         favoriteViewModel.loadFavoriteMovies()
 
         favoriteViewModel.favoriteMovies.observe(viewLifecycleOwner){favoriteMoviesList ->
-            moviesFavoriteAdapter.appendItems(favoriteMoviesList)
+            charactersFavoriteAdapter.appendItems(favoriteMoviesList)
         }
 
         return binding.root

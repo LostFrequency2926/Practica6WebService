@@ -34,24 +34,24 @@ class DetailFragment : Fragment() {
             }
         }
 
-        val movie = args.movie
+        val character = args.character
 
-        detailViewModel.searchMovie(movie.id)
+        character.id?.let { detailViewModel.searchMovie(it) }
 
         with(detailBinding){
-            titleTextView.text = movie.title
-            releaseDateTextView.text = "Release date: " + movie.releaseDate
-            averageTextView.text = "Vote average: " + movie.voteAverage.toString()
-            summaryTextView.text= movie.overview
-            Picasso.get().load("https://image.tmdb.org/t/p/w500/"+movie.posterPath).into(posterImageView)
+            titleTextView.text = character.name
+            releaseDateTextView.text = character.gender
+            averageTextView.text = character.created
+            summaryTextView.text= character.species
+            Picasso.get().load(character.image).into(posterImageView)
 
             addFavoriteIcon.setOnClickListener{
                 if(isMovieFavorite)
-                    Toast.makeText(context, "${movie.title} ya esta en tus favoritos", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "${character.name} ya esta en tus favoritos", Toast.LENGTH_LONG).show()
                 else{
                     isMovieFavorite = true
                     addFavoriteIcon.setImageDrawable(resources.getDrawable(R.drawable.favoritoicon))
-                    detailViewModel.saveMovie(movie)
+                    detailViewModel.saveMovie(character)
                 }
             }
         }

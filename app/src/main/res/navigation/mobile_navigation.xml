@@ -27,8 +27,8 @@
         android:label="@string/detail"
         tools:layout="@layout/fragment_detail" >
         <argument
-            android:name="movie"
-            app:argType="com.example.webserviceapplication.server.model.Movie" />
+            android:name="character"
+            app:argType="com.example.webserviceapplication.server.modelo.Character" />
     </fragment>
 
 </navigation>

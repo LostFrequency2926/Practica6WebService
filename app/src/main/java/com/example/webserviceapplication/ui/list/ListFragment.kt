@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.webserviceapplication.databinding.FragmentListBinding
-import com.example.webserviceapplication.server.model.Movie
+import com.example.webserviceapplication.server.modelo.Character
 
 class ListFragment : Fragment() {
 
@@ -25,26 +24,26 @@ class ListFragment : Fragment() {
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
-        val moviesList = ArrayList<Movie>()
-        val moviesAdapter = MoviesAdapter(moviesList, onItemClicked = {movie -> onItemClicked(movie)})
+        val charactersList = ArrayList<Character>()
+        val charactersListAdapter = CharactersListAdapter(charactersList, onItemClicked = { character -> onItemClicked(character)})
 
         binding.moviesRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@ListFragment.requireContext())
-            adapter = moviesAdapter
+            adapter = charactersListAdapter
             setHasFixedSize(false)
         }
 
         listViewModel.loadMovies()
 
-        listViewModel.moviesLoaded.observe(viewLifecycleOwner){listMovies ->
-            moviesAdapter.appendItems(listMovies)
+        listViewModel.charactersLoaded.observe(viewLifecycleOwner){listCharacters ->
+            charactersListAdapter.appendItems(listCharacters)
         }
 
         return binding.root
     }
 
-    private fun onItemClicked(movie: Movie){
-        findNavController().navigate(ListFragmentDirections.actionNavigationListToNavigationDetail(movie = movie))
+    private fun onItemClicked(character: Character){
+    //    findNavController().navigate(ListFragmentDirections.actionNavigationListToNavigationDetail(movie = movie))
     }
 
     override fun onDestroyView() {
